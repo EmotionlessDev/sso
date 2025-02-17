@@ -1,0 +1,40 @@
+services:
+  sso:
+    container_name: sso
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "4001:50051"
+    depends_on:
+      sso-database:
+        condition: service_healthy
+    networks:
+      - sso-network 
+  sso-database:
+    container_name: sso-database 
+    image: postgres:14.0-alpine
+    volumes:
+      - v-sso-database:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks:
+      - sso-network 
+
+volumes:
+  v-sso-database:
+
+networks:
+  sso-network:
+    driver: bridge
+ 

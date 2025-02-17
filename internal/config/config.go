@@ -12,6 +12,7 @@ type Config struct {
 	Env      string        `yaml:"env" env-default:"local"`
 	TokenTTL time.Duration `yaml:"token_ttl" env-required:"true"`
 	GRPC     GRPCConfig    `yaml:"grpc"`
+	DSN      string        `yaml:"dsn" env-required:"true"`
 }
 
 type GRPCConfig struct {

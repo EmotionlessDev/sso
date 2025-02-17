@@ -3,3 +3,5 @@ token_ttl: 1h
 grpc:
   port: 50051
   timeout: 10h
+dsn: "postgres://postgres:sso@sso-database:5432/sso?sslmode=disable"
+
